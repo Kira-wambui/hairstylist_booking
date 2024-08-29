@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bookings',  # Your app for booking functionality
+    'tailwind',  # Tailwind CSS integration
+    'django_browser_reload',  # Optional: for hot-reloading during development
 ]
 
+# Tailwind CSS setup
+TAILWIND_APP_NAME = 'bookings'
+
+# Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -47,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',  # Optional: for hot-reloading
 ]
 
 ROOT_URLCONF = 'hairstylist_booking.urls'
@@ -54,7 +62,7 @@ ROOT_URLCONF = 'hairstylist_booking.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # Point to your templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,9 +123,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Your static files directory
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # The directory where collectstatic will collect static files for production
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Tailwind static files configuration
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
